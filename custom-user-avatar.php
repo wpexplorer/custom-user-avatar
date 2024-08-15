@@ -50,7 +50,7 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 		 */
 		public function __construct() {
 			if ( is_admin() ) {
-				add_filter( 'user_contactmethods', [ $this, 'filter_user_contactmethods' ] );
+				add_filter( 'user_contactmethods', [ $this, 'filter_user_contactmethods' ], PHP_INT_MAX );
 				add_filter( 'user_profile_picture_description', [ $this, 'filter_user_profile_picture_description' ], 10, 2 );
 			}
 			add_filter( 'pre_get_avatar_data', [ $this, 'filter_pre_get_avatar_data' ], 10, 2 );
@@ -59,7 +59,7 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 		/**
 		 * Hooks into the "user_contactmethods" filter.
 		 */
-		public function filter_user_contactmethods( $fields ): array {
+		public function filter_user_contactmethods( $methods ): array {
 			$methods[ self::FIELD_KEY ] = esc_html__( 'Custom Avatar (ID or URL)', 'custom-user-avatar' );
 			return $methods;
 		}
