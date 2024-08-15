@@ -118,7 +118,7 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 						}
 						restore_current_blog();
 					}
-					if ( ! $custom_avatar ) {
+					if ( ! $custom_avatar_url ) {
 						$custom_avatar_post = get_post( $custom_avatar );
 						if ( $custom_avatar_post && wp_attachment_is_image( $custom_avatar_post ) ) {
 							$custom_avatar_url = esc_url( wp_get_attachment_url( $custom_avatar ) );
