@@ -71,12 +71,14 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 			if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE ) {
 				if ( get_user_meta( $profile_user->ID, self::FIELD_KEY, true ) ) {
 					$description = sprintf(
+						/* translators: %s: link to custom avatar field */
 						esc_html__( '%1$sYou can change your profile picture using the "Custom Avatar" field above%2$s.', 'custom-user-avatar' ),
 						'<a href="#custom_avatar">',
 						'</a>'
 					);
 				} elseif ( is_string( $description ) ) {
 					$description .=  '<br>' . sprintf(
+						/* translators: %s: link to custom avatar field */
 						esc_html__( '%1$sOr using the "Custom Avatar" field above%2$s.', 'custom-user-avatar' ),
 						'<a href="#custom_avatar">',
 						'</a>'
