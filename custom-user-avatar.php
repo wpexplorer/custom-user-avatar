@@ -71,13 +71,13 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 			if ( defined( 'IS_PROFILE_PAGE' ) && IS_PROFILE_PAGE ) {
 				if ( get_user_meta( $profile_user->ID, self::FIELD_KEY, true ) ) {
 					$description = sprintf(
-						esc_html__( '%sYou can change your profile picture using the "Custom Avatar" field above%s.', 'custom-user-avatar' ),
+						esc_html__( '%1$sYou can change your profile picture using the "Custom Avatar" field above%2$s.', 'custom-user-avatar' ),
 						'<a href="#custom_avatar">',
 						'</a>'
 					);
 				} elseif ( is_string( $description ) ) {
 					$description .=  '<br>' . sprintf(
-						esc_html__( '%sOr using the "Custom Avatar" field above%s.', 'custom-user-avatar' ),
+						esc_html__( '%1$sOr using the "Custom Avatar" field above%2$s.', 'custom-user-avatar' ),
 						'<a href="#custom_avatar">',
 						'</a>'
 					);
@@ -108,12 +108,27 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 
 			// Check for and assign custom user avatars.
 			if ( $user && $custom_avatar = get_user_meta( $user->ID, self::FIELD_KEY, true ) ) {
+				$custom_avatar_url = false;
 				if ( is_numeric( $custom_avatar ) ) {
-					if ( wp_attachment_is_image( get_post( $custom_avatar ) ) ) {
-						$args['url'] = esc_url( wp_get_attachment_url( $custom_avatar ) );
+					if ( is_multisite() && ! is_main_site() ) {
+						switch_to_blog( get_main_site_id() );
+						$custom_avatar_post = get_post( $custom_avatar );
+						if ( $custom_avatar_post && wp_attachment_is_image( $custom_avatar_post ) ) {
+							$custom_avatar_url = esc_url( wp_get_attachment_url( $custom_avatar ) );
+						}
+						restore_current_blog();
+					}
+					if ( ! $custom_avatar ) {
+						$custom_avatar_post = get_post( $custom_avatar );
+						if ( $custom_avatar_post && wp_attachment_is_image( $custom_avatar_post ) ) {
+							$custom_avatar_url = esc_url( wp_get_attachment_url( $custom_avatar ) );
+						}
 					}
 				} elseif ( $this->url_is_image( $custom_avatar ) && $safe_avatar_url = esc_url( (string) $custom_avatar ) ) {
-					$args['url'] = $safe_avatar_url;
+					$custom_avatar_url = $safe_avatar_url;
+				}
+				if ( $custom_avatar_url ) {
+					$args['url'] = $custom_avatar_url;
 				}
 			}
 
