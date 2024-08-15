@@ -1,7 +1,7 @@
 === Custom User Avatar ===
 Contributors: WPExplorer
 Donate link: https://www.wpexplorer.com/donate/
-Tags: user, avatar, profile, photo
+Tags: user, avatar, profile, photo, gravatar
 Requires at least: 4.2.0
 Requires PHP: 8.0
 Tested up to: 6.6
@@ -13,6 +13,8 @@ Adds a new field to the user edit screen where you can define a custom avatar.
 
 == Description ==
 This plugin simply adds a new field to the WordPress user edit screen where you can define a custom avatar for the user. The field accepts either an image attachment ID or a full URL to an image.
+
+Custom User Avatar also includes support for multisite installations. If you define an image ID for a user avatar that was uploaded to the primary site it will display this image across all subsites.
 
 == Installation ==
 
