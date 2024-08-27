@@ -91,7 +91,7 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 		/**
 		 * Hooks into the "pre_get_avatar_data" filter.
 		 */
-		public function filter_pre_get_avatar_data( $args, $id_or_email ): array {
+		public function filter_pre_get_avatar_data( $data, $id_or_email ): array {
 			// Process the user identifier.
 			$user = false;
 			if ( is_numeric( $id_or_email ) ) {
@@ -130,12 +130,12 @@ if ( ! class_exists( 'Custom_User_Avatar' ) ) {
 					$custom_avatar_url = $safe_avatar_url;
 				}
 				if ( $custom_avatar_url ) {
-					$args['url'] = $custom_avatar_url;
+					$data['url'] = $custom_avatar_url;
 				}
 			}
 
-			// Return avatar args.
-			return $args;
+			// Return avatar data.
+			return $data;
 		}
 
 		/**
